@@ -42,7 +42,7 @@ public class Prog7 {
         double xk = 3000;
         double yk = 155;
         // calculate betas
-        DecimalFormat dFormat = new DecimalFormat("0.00000");
+        DecimalFormat dFormat = new DecimalFormat("0.0000");
         double[] betas = gaussian(new double[][]{
                 {zi.length, sum(wi), sum(xi), sum(yi), sum(zi)},
                 {sum(wi), sumMultiply(wi, wi), sumMultiply(wi, xi), sumMultiply(wi, yi), sumMultiply(wi, zi)},
@@ -54,7 +54,7 @@ public class Prog7 {
         System.out.println("Beta-2 = " + dFormat.format(betas[2]));
         System.out.println("Beta-3 = " + dFormat.format(betas[3]));
         // calculate zk
-        dFormat = new DecimalFormat("0.00");
+        dFormat = new DecimalFormat("0.0");
         double zk = calculateZ(betas, wk, xk, yk);
         System.out.println("Projected Hours = " + dFormat.format(zk));
         // calculate UPI and LPI
@@ -135,8 +135,8 @@ public class Prog7 {
             xSigma += Math.pow(xi[i] - mean(xi), 2);
             ySigma += Math.pow(yi[i] - mean(yi), 2);
         }
-        sigma = Math.sqrt(sigma / dof);
-        return calculateX(0.35, 0.0001, dof) * sigma * Math.sqrt(1 + 1 / zi.length
+        sigma = Math.round(calculateX(0.35, 0.00001, dof) * 1000) / 1000.0 * Math.sqrt(sigma / dof);
+        return sigma * Math.sqrt(1 + 1.0 / zi.length
                 + Math.pow(wk - mean(wi), 2) / wSigma
                 + Math.pow(xk - mean(xi), 2) / xSigma
                 + Math.pow(yk - mean(yi), 2) / ySigma
